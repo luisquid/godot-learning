@@ -17,15 +17,15 @@ func _physics_process(delta):
 	var friction = false
 	
 	if Input.is_action_pressed("ui_right"):
-		sprite.flip_h = true
-		animationPlayer.play("Walk")
+		sprite.flip_h = false
+		##animationPlayer.play("Walk")
 		motion.x = min(motion.x + moveSpeed, maxSpeed)
 	elif Input.is_action_pressed("ui_left"):
-		sprite.flip_h = false
-		animationPlayer.play("Walk")
+		sprite.flip_h = true
+		##animationPlayer.play("Walk")
 		motion.x = max(motion.x - moveSpeed, -maxSpeed)
 	else:
-		animationPlayer.play("Idle")
+		##animationPlayer.play("Idle")
 		friction = true;
 	
 	if is_on_floor():
@@ -39,10 +39,3 @@ func _physics_process(delta):
 			
 	motion = move_and_slide(motion, up)
 
-
-func add_Coin():
-	
-	var canvasLayer = get_tree().get_root().find_node("CanvasLayer", true, false);
-	
-	canvasLayer.handleCoinCollected();
-	pass
