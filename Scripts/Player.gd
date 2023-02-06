@@ -46,3 +46,11 @@ func add_Coin():
 	
 	canvasLayer.handleCoinCollected();
 	pass
+	
+func _loseLife():
+	print("LOST A LIFE!")	
+	get_tree().reload_current_scene()
+
+func _on_Spikes_body_entered(body):
+	if body.get_name() == "Player":
+		get_tree().reload_current_scene()

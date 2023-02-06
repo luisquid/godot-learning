@@ -11,5 +11,8 @@ func handleCoinCollected():
 	$CoinsCollectedText.text = String(coins)
 	
 	if coins >= 2:
-		get_tree().change_scene("res://Scenes/World2.tscn")
-		pass
+		## Level change
+		##get_tree().change_scene("res://Scenes/World2.tscn")
+		print(str(int(get_tree().current_scene.name)))
+		get_tree().change_scene("res://Scenes/World" + str(int(get_tree().current_scene.name)+1)+ ".tscn")
+		
