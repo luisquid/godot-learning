@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://doffwm0haerbg"]
+
+[ext_resource type="Texture2D" uid="uid://wx81hqkf6f7" path="res://kenney_space-shooter-redux/Backgrounds/purple.png" id="1_1h3ct"]
+
+[node name="Level01" type="Node2D"]
+
+[node name="Background" type="TextureRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("1_1h3ct")
+stretch_mode = 1

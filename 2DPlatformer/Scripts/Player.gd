@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 const moveSpeed = 40
 const maxSpeed = 70
@@ -7,8 +7,8 @@ const jumpHeight = -300
 const up = Vector2(0,-1)
 const gravity = 15
 
-onready var sprite = $Sprite
-onready var animationPlayer = $AnimationPlayer
+@onready var sprite = $Sprite2D
+@onready var animationPlayer = $AnimationPlayer
 
 var motion = Vector2()
 
@@ -37,12 +37,15 @@ func _physics_process(delta):
 		if friction == true:
 			motion.x = lerp(motion.x, 0, 0.01)
 			
-	motion = move_and_slide(motion, up)
+	set_velocity(motion)
+	set_up_direction(up)
+	move_and_slide()
+	motion = velocity
 
 
 func add_Coin():
 	
-	var canvasLayer = get_tree().get_root().find_node("CanvasLayer", true, false);
+	var canvasLayer = get_tree().get_root().find_child("CanvasLayer", true, false);
 	
 	canvasLayer.handleCoinCollected();
 	pass

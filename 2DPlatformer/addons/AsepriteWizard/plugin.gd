@@ -1,4 +1,4 @@
-tool
+@tool
 extends EditorPlugin
 
 const ConfigDialog = preload('config/config_dialog.tscn')
@@ -32,7 +32,7 @@ func _enter_tree():
 	_setup_sprite_inspector_plugin()
 
 
-func disable_plugin():
+func _disable_plugin():
 	_remove_menu_entries()
 	_remove_importer()
 	_remove_exporter()
@@ -124,9 +124,9 @@ func _open_window(_ud):
 		make_bottom_panel_item_visible(window)
 		return
 
-	window = WizardWindow.instance()
+	window = WizardWindow.instantiate()
 	window.init(config, get_editor_interface().get_resource_filesystem())
-	window.connect("close_requested", self, "_on_window_closed")
+	window.connect("close_requested",Callable(self,"_on_window_closed"))
 	add_control_to_bottom_panel(window, "Aseprite Wizard")
 	make_bottom_panel_item_visible(window)
 
@@ -135,7 +135,7 @@ func _open_config_dialog(_ud):
 	if is_instance_valid(config_window):
 		config_window.queue_free()
 
-	config_window = ConfigDialog.instance()
+	config_window = ConfigDialog.instantiate()
 	config_window.init(config)
 	get_editor_interface().get_base_control().add_child(config_window)
 	config_window.popup_centered()

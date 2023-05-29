@@ -23,7 +23,7 @@ func _create_meta_tracks(target_node: Node, player: AnimationPlayer, animation: 
 	animation.track_insert_key(visible_track_index, 0, true)
 
 
-func _get_atlas_texture(base_texture: Texture, frame_data: Dictionary) -> AtlasTexture:
+func _get_atlas_texture(base_texture: Texture2D, frame_data: Dictionary) -> AtlasTexture:
 	var tex = AtlasTexture.new()
 	tex.atlas = base_texture
 	tex.region = Rect2(Vector2(frame_data.frame.x, frame_data.frame.y), Vector2(frame_data.frame.w, frame_data.frame.h))

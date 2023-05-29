@@ -1,4 +1,4 @@
-tool
+@tool
 extends PanelContainer
 
 const wizard_config = preload("../../config/wizard_config.gd")
@@ -27,16 +27,16 @@ var _output_folder := ""
 var _out_folder_default := "[Same as scene]"
 var _layer_default := "[all]"
 
-onready var _options_field = $margin/VBoxContainer/animation_player/options
-onready var _source_field = $margin/VBoxContainer/source/button
-onready var _layer_field = $margin/VBoxContainer/layer/options
-onready var _options_title = $margin/VBoxContainer/options_title/options_title
-onready var _options_container = $margin/VBoxContainer/options
-onready var _out_folder_field = $margin/VBoxContainer/options/out_folder/button
-onready var _out_filename_field = $margin/VBoxContainer/options/out_filename/LineEdit
-onready var _visible_layers_field =  $margin/VBoxContainer/options/visible_layers/CheckButton
-onready var _ex_pattern_field = $margin/VBoxContainer/options/ex_pattern/LineEdit
-onready var _cleanup_hide_unused_nodes =  $margin/VBoxContainer/options/auto_visible_track/CheckButton
+@onready var _options_field = $margin/VBoxContainer/animation_player/options
+@onready var _source_field = $margin/VBoxContainer/source/button
+@onready var _layer_field = $margin/VBoxContainer/layer/options
+@onready var _options_title = $margin/VBoxContainer/options_title/options_title
+@onready var _options_container = $margin/VBoxContainer/options
+@onready var _out_folder_field = $margin/VBoxContainer/options/out_folder/button
+@onready var _out_filename_field = $margin/VBoxContainer/options/out_filename/LineEdit
+@onready var _visible_layers_field =  $margin/VBoxContainer/options/visible_layers/CheckButton
+@onready var _ex_pattern_field = $margin/VBoxContainer/options/ex_pattern/LineEdit
+@onready var _cleanup_hide_unused_nodes =  $margin/VBoxContainer/options/auto_visible_track/CheckButton
 
 
 func _ready():
@@ -46,7 +46,7 @@ func _ready():
 	else:
 		_load_config(cfg)
 
-	if target_node is Sprite || target_node is Sprite3D:
+	if target_node is Sprite2D || target_node is Sprite3D:
 		animation_creator = SpriteAnimationCreator.new()
 	if target_node is TextureRect:
 		animation_creator = TextureRectAnimationCreator.new()		
@@ -67,23 +67,23 @@ func _load_config(cfg):
 	_output_folder = cfg.get("o_folder", "")
 	_out_folder_field.text = _output_folder if _output_folder != "" else _out_folder_default
 	_out_filename_field.text = cfg.get("o_name", "")
-	_visible_layers_field.pressed = cfg.get("only_visible", false)
+	_visible_layers_field.button_pressed = cfg.get("only_visible", false)
 	_ex_pattern_field.text = cfg.get("o_ex_p", "")
-	_cleanup_hide_unused_nodes.pressed = cfg.get("set_vis_track", config.is_set_visible_track_automatically_enabled())
+	_cleanup_hide_unused_nodes.button_pressed = cfg.get("set_vis_track", config.is_set_visible_track_automatically_enabled())
 
 	_set_options_visible(cfg.get("op_exp", false))
 
 
 func _load_default_config():
 	_ex_pattern_field.text = config.get_default_exclusion_pattern()
-	_cleanup_hide_unused_nodes.pressed = config.is_set_visible_track_automatically_enabled()
+	_cleanup_hide_unused_nodes.button_pressed = config.is_set_visible_track_automatically_enabled()
 	_set_options_visible(false)
 
 
 func _set_source(source):
 	_source = source
 	_source_field.text = _source
-	_source_field.hint_tooltip = _source
+	_source_field.tooltip_text = _source
 
 
 func _set_animation_player(player):
@@ -222,10 +222,10 @@ func _open_source_dialog():
 
 func _create_aseprite_file_selection():
 	var file_dialog = FileDialog.new()
-	file_dialog.mode = FileDialog.MODE_OPEN_FILE
+	file_dialog.mode = FileDialog.FILE_MODE_OPEN_FILE
 	file_dialog.access = FileDialog.ACCESS_FILESYSTEM
-	file_dialog.connect("file_selected", self, "_on_aseprite_file_selected")
-	file_dialog.set_filters(PoolStringArray(["*.ase","*.aseprite"]))
+	file_dialog.connect("file_selected",Callable(self,"_on_aseprite_file_selected"))
+	file_dialog.set_filters(PackedStringArray(["*.ase","*.aseprite"]))
 	return file_dialog
 
 
@@ -240,7 +240,7 @@ func _show_message(message: String):
 	get_parent().add_child(_warning_dialog)
 	_warning_dialog.dialog_text = message
 	_warning_dialog.popup_centered()
-	_warning_dialog.connect("popup_hide", _warning_dialog, "queue_free")
+	_warning_dialog.connect("popup_hide",Callable(_warning_dialog,"queue_free"))
 
 
 func _on_options_title_toggled(button_pressed):
@@ -263,9 +263,9 @@ func _on_out_folder_pressed():
 
 func _create_output_folder_selection():
 	var file_dialog = FileDialog.new()
-	file_dialog.mode = FileDialog.MODE_OPEN_DIR
+	file_dialog.mode = FileDialog.FILE_MODE_OPEN_DIR
 	file_dialog.access = FileDialog.ACCESS_RESOURCES
-	file_dialog.connect("dir_selected", self, "_on_output_folder_selected")
+	file_dialog.connect("dir_selected",Callable(self,"_on_output_folder_selected"))
 	return file_dialog
 
 

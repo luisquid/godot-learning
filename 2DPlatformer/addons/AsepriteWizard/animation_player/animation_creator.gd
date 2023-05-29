@@ -1,4 +1,4 @@
-extends Reference
+extends RefCounted
 
 var result_code = preload("../config/result_codes.gd")
 var _aseprite = preload("../aseprite/aseprite.gd").new()
@@ -26,7 +26,7 @@ func create_animations(target_node: Node, player: AnimationPlayer, options: Dict
 
 	var result = _create_animations_from_file(target_node, player, options)
 	if result is GDScriptFunctionState:
-		result = yield(result, "completed")
+		result = await result.completed
 
 	if result != result_code.SUCCESS:
 		printerr(result_code.get_error_message(result))
@@ -40,19 +40,19 @@ func _create_animations_from_file(target_node: Node, player: AnimationPlayer, op
 	else:
 		output = _aseprite.export_layer(options.source, options.layer, options.output_folder, options)
 
-	if output.empty():
+	if output.is_empty():
 		return result_code.ERR_ASEPRITE_EXPORT_FAILED
 
 	if _config.is_import_preset_enabled():
 		_config.create_import_file(output)
 
-	yield(_scan_filesystem(), "completed")
+	await _scan_filesystem().completed
 
 	var result = _import(target_node, player, output, options)
 
 	if _config.should_remove_source_files():
 		var dir = Directory.new()
-		dir.remove(output.data_file)
+		dir.remove_at(output.data_file)
 
 	return result
 
@@ -66,7 +66,9 @@ func _import(target_node: Node, player: AnimationPlayer, data: Dictionary, optio
 	if err != OK:
 			return err
 
-	var content =  parse_json(file.get_as_text())
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(file.get_as_text())
+	var content =  test_json_conv.get_data()
 	
 	if not _aseprite.is_valid_spritesheet(content):
 		return result_code.ERR_INVALID_ASEPRITE_SPRITESHEET
@@ -81,27 +83,27 @@ func _import(target_node: Node, player: AnimationPlayer, data: Dictionary, optio
 	return _cleanup_animations(target_node, player, content, options)
 	
 
-func _load_texture(sprite_sheet: String) -> Texture:
+func _load_texture(sprite_sheet: String) -> Texture2D:
 	var texture = ResourceLoader.load(sprite_sheet, 'Image', true)
 	texture.take_over_path(sprite_sheet)
 	return texture
 
 
 func _configure_animations(target_node: Node, player: AnimationPlayer, content: Dictionary, context: Dictionary):
-	var frames = _aseprite.get_content_frames(content)
+	var sprite_frames = _aseprite.get_content_frames(content)
 	if content.meta.has("frameTags") and content.meta.frameTags.size() > 0:
 		var result = result_code.SUCCESS
 		for tag in content.meta.frameTags:
-			var selected_frames = frames.slice(tag.from, tag.to)
+			var selected_frames = sprite_frames.slice(tag.from, tag.to)
 			result = _add_animation_frames(target_node, player, tag.name, selected_frames, context, tag.direction)
 			if result != result_code.SUCCESS:
 				break
 		return result
 	else:
-		return _add_animation_frames(target_node, player, "default", frames, context)
+		return _add_animation_frames(target_node, player, "default", sprite_frames, context)
 
 
-func _add_animation_frames(target_node: Node, player: AnimationPlayer, anim_name: String, frames: Array, context: Dictionary, direction = 'forward'):
+func _add_animation_frames(target_node: Node, player: AnimationPlayer, anim_name: String, sprite_frames: Array, context: Dictionary, direction = 'forward'):
 	var animation_name = anim_name
 	var is_loopable = _config.is_default_animation_loop_enabled()
 
@@ -110,7 +112,7 @@ func _add_animation_frames(target_node: Node, player: AnimationPlayer, anim_name
 		is_loopable = not is_loopable
 
 	if not player.has_animation(animation_name):
-		player.add_animation(animation_name, Animation.new())
+		player.add_animation_library(animation_name, Animation.new())
 
 	var animation = player.get_animation(animation_name)
 	_create_meta_tracks(target_node, player, animation)
@@ -118,22 +120,22 @@ func _add_animation_frames(target_node: Node, player: AnimationPlayer, anim_name
 	var frame_track_index = _create_track(target_node, animation, frame_track)
 
 	if direction == 'reverse':
-		frames.invert()
+		sprite_frames.reverse()
 
 	var animation_length = 0
 
-	for frame in frames:
+	for frame in sprite_frames:
 		var frame_key = _get_frame_key(target_node, frame, context)
 		animation.track_insert_key(frame_track_index, animation_length, frame_key)
 		animation_length += frame.duration / 1000
 
 	if direction == 'pingpong':
-		frames.remove(frames.size() - 1)
+		sprite_frames.remove_at(sprite_frames.size() - 1)
 		if is_loopable:
-			frames.remove(0)
-		frames.invert()
+			sprite_frames.remove_at(0)
+		sprite_frames.reverse()
 
-		for frame in frames:
+		for frame in sprite_frames:
 			var frame_key = _get_frame_key(target_node, frame, context)
 			animation.track_insert_key(frame_track_index, animation_length, frame_key)
 			animation_length += frame.duration / 1000
@@ -198,7 +200,7 @@ func _hide_unused_nodes(target_node: Node, player: AnimationPlayer, content: Dic
 			var path := _remove_properties_from_path(raw_path)
 			var sprite_node := root_node.get_node(path)
 
-			if !(sprite_node is Sprite || sprite_node is Sprite3D):
+			if !(sprite_node is Sprite2D || sprite_node is Sprite3D):
 				continue
 
 			if sprite_nodes.has(sprite_node):
@@ -225,7 +227,7 @@ func _hide_unused_nodes(target_node: Node, player: AnimationPlayer, content: Dic
 
 func _scan_filesystem():
 	_file_system.scan()
-	yield(_file_system, "filesystem_changed")
+	await _file_system.filesystem_changed
 
 
 func list_layers(file: String, only_visibles = false) -> Array:

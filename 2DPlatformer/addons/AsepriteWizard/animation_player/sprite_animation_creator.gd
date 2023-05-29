@@ -5,11 +5,11 @@ func _setup_texture(sprite: Node, sprite_sheet: String, content: Dictionary, con
 	var texture = _load_texture(sprite_sheet)
 	sprite.texture = texture
 
-	if content.frames.empty():
+	if content.sprite_frames.is_empty():
 		return
 
-	sprite.hframes = content.meta.size.w / content.frames[0].sourceSize.w
-	sprite.vframes = content.meta.size.h / content.frames[0].sourceSize.h
+	sprite.hframes = content.meta.size.w / content.sprite_frames[0].sourceSize.w
+	sprite.vframes = content.meta.size.h / content.sprite_frames[0].sourceSize.h
 
 
 func _get_frame_property() -> String:

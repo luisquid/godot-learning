@@ -1,5 +1,5 @@
-tool
-extends Reference
+@tool
+extends RefCounted
 
 # GLOBAL SETTINGS
 const _CONFIG_SECTION_KEY = 'aseprite'
@@ -57,7 +57,7 @@ func default_command() -> String:
 	return 'aseprite'
 
 
-func get_command() -> String:
+func is_command_or_control_pressed() -> String:
 	var command = _editor_settings.get(_COMMAND_KEY) if _editor_settings.has_setting(_COMMAND_KEY) else ""
 	return command if command != "" else default_command()
 
@@ -113,7 +113,9 @@ func get_import_history() -> Array:
 	while not file_object.eof_reached():
 		var line = file_object.get_line()
 		if line:
-			history.push_back(parse_json(line))
+			var test_json_conv = JSON.new()
+			test_json_conv.parse(line))
+			history.push_back(test_json_conv.get_data()
 
 	return history
 
@@ -126,7 +128,7 @@ func save_import_history(history: Array):
 	var file = File.new()
 	file.open(_get_history_file_path(), File.WRITE)
 	for entry in history:
-		file.store_line(to_json(entry))
+		file.store_line(JSON.new().stringify(entry))
 	file.close()
 
 
@@ -214,7 +216,7 @@ func set_icons(plugin_icons: Dictionary) -> void:
 	_plugin_icons = plugin_icons
 
 
-func get_icon(icon_name: String) -> Texture:
+func get_icon(icon_name: String) -> Texture2D:
 	return _plugin_icons[icon_name]
 
 
@@ -292,7 +294,7 @@ func create_import_file(data: Dictionary) -> void:
 		return
 
 	import_file.set_value("remap", "importer", "texture")
-	import_file.set_value("remap", "type", "StreamTexture")
+	import_file.set_value("remap", "type", "CompressedTexture2D")
 	import_file.set_value("deps", "source_file", data.sprite_sheet)
 	var preset: Dictionary = ProjectSettings.get_setting(_IMPORT_PRESET_KEY)
 	for key in preset:

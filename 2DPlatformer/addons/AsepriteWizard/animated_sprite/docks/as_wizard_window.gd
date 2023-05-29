@@ -1,4 +1,4 @@
-tool
+@tool
 extends PanelContainer
 
 signal close_requested
@@ -37,24 +37,24 @@ func init(config, editor_file_system: EditorFileSystem):
 
 
 func _load_persisted_config():
-	_split_mode_field().pressed = _config.should_split_layers()
-	_only_visible_layers_field().pressed = _config.should_include_only_visible_layers()
+	_split_mode_field().button_pressed = _config.should_split_layers()
+	_only_visible_layers_field().button_pressed = _config.should_include_only_visible_layers()
 	_exception_pattern_field().text = _config.get_exception_pattern()
 	_custom_name_field().text = _config.get_last_custom_name()
 	_file_location_field().text = _config.get_last_source_path()
-	_do_not_create_res_field().pressed = _config.should_not_create_resource()
+	_do_not_create_res_field().button_pressed = _config.should_not_create_resource()
 
 	var output_folder = _config.get_last_output_path()
 	_output_folder_field().text = output_folder if output_folder != "" else "res://"
 
 
 func load_import_config(import_config: Dictionary):
-	_split_mode_field().pressed = import_config.options.export_mode == _sf_creator.LAYERS_EXPORT_MODE
-	_only_visible_layers_field().pressed = import_config.options.only_visible_layers
+	_split_mode_field().button_pressed = import_config.options.export_mode == _sf_creator.LAYERS_EXPORT_MODE
+	_only_visible_layers_field().button_pressed = import_config.options.only_visible_layers
 	_exception_pattern_field().text = import_config.options.exception_pattern
 	_custom_name_field().text = import_config.options.output_filename
 	_file_location_field().text = import_config.source_file
-	_do_not_create_res_field().pressed = import_config.options.do_not_create_resource
+	_do_not_create_res_field().button_pressed = import_config.options.do_not_create_resource
 	_output_folder_field().text = import_config.output_location if import_config.output_location != "" else "res://"
 
 
@@ -74,18 +74,18 @@ func _open_output_folder_selection_dialog():
 
 func _create_aseprite_file_selection():
 	var file_dialog = FileDialog.new()
-	file_dialog.mode = FileDialog.MODE_OPEN_FILE
+	file_dialog.mode = FileDialog.FILE_MODE_OPEN_FILE
 	file_dialog.access = FileDialog.ACCESS_FILESYSTEM
-	file_dialog.connect("file_selected", self, "_on_aseprite_file_selected")
-	file_dialog.set_filters(PoolStringArray(["*.ase","*.aseprite"]))
+	file_dialog.connect("file_selected",Callable(self,"_on_aseprite_file_selected"))
+	file_dialog.set_filters(PackedStringArray(["*.ase","*.aseprite"]))
 	return file_dialog
 
 
 func _create_outuput_folder_selection():
 	var file_dialog = FileDialog.new()
-	file_dialog.mode = FileDialog.MODE_OPEN_DIR
+	file_dialog.mode = FileDialog.FILE_MODE_OPEN_DIR
 	file_dialog.access = FileDialog.ACCESS_RESOURCES
-	file_dialog.connect("dir_selected", self, "_on_output_folder_selected")
+	file_dialog.connect("dir_selected",Callable(self,"_on_output_folder_selected"))
 	return file_dialog
 
 
@@ -119,7 +119,7 @@ func _on_next_btn_up():
 		output_location, options
 	)
 	if exit_code is GDScriptFunctionState:
-		exit_code = yield(exit_code, "completed")
+		exit_code = await exit_code.completed
 
 	if exit_code != 0:
 		_show_error(exit_code)
