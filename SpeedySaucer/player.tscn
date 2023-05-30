@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dxm7vjeo5bwcq"]
+
+[ext_resource type="Texture2D" uid="uid://c7y4lmoo235kx" path="res://kenney_space-shooter-redux/PNG/playerShip1_blue.png" id="1_ig8ta"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_crjmh"]
+size = Vector2(84, 67)
+
+[node name="Player" type="RigidBody2D"]
+gravity_scale = 0.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ig8ta")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_crjmh")
