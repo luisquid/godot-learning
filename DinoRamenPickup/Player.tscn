@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://fs4qikj6kx0m"]
+
+[ext_resource type="Texture2D" uid="uid://u3pjq6lktn5r" path="res://idle.png" id="1_dyipf"]
+
+[node name="Player" type="Sprite2D"]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_dyipf")
+hframes = 3
+frame = 2

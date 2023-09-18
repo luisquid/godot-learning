@@ -1,0 +1,98 @@
+[gd_scene load_steps=10 format=3 uid="uid://bme72c1mlmmtl"]
+
+[ext_resource type="Material" uid="uid://cx2yxx2u627v1" path="res://Materials/TestMaterial.tres" id="1_nmkt7"]
+[ext_resource type="Material" uid="uid://drc06hksdhrlk" path="res://Materials/Magenta.tres" id="2_1g2uy"]
+[ext_resource type="Texture2D" uid="uid://ccnlg27l4o0m1" path="res://Sprites/Player.png" id="2_ag3f4"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_50v1c"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4af66"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_3xc6o"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8u4y7"]
+albedo_texture = ExtResource("2_ag3f4")
+
+[sub_resource type="SphereMesh" id="SphereMesh_8f7ve"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_i6cyx"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="SnowMan" type="Node3D" parent="."]
+visible = false
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="SnowMan"]
+transform = Transform3D(2.09282, 0, 0, 0, 2.09282, 0, 0, 0, 2.09282, 0, 0, 0)
+material_override = ExtResource("1_nmkt7")
+mesh = SubResource("SphereMesh_50v1c")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="SnowMan"]
+transform = Transform3D(1.58629, 0, 0, 0, 1.58629, 0, 0, 0, 1.58629, 0, 1.4145, 0)
+material_override = ExtResource("1_nmkt7")
+mesh = SubResource("SphereMesh_50v1c")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="SnowMan"]
+transform = Transform3D(1.0666, 0, 0, 0, 1.0666, 0, 0, 0, 1.0666, 0, 2.41791, 0)
+material_override = ExtResource("1_nmkt7")
+mesh = SubResource("SphereMesh_50v1c")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="SnowMan"]
+transform = Transform3D(0.20954, 0, 0, 0, 0.225233, 0, 0, 0, 1.0666, 0, 1.39939, 0.791302)
+material_override = ExtResource("1_nmkt7")
+mesh = SubResource("BoxMesh_4af66")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="SnowMan"]
+transform = Transform3D(0.20954, 0, 0, 0, 0.225233, 0, 0, 0, 1.0666, 0, 1.39939, -0.758348)
+material_override = ExtResource("1_nmkt7")
+mesh = SubResource("BoxMesh_4af66")
+skeleton = NodePath("../..")
+
+[node name="Node3D" type="Node3D" parent="."]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
+material_override = ExtResource("1_nmkt7")
+mesh = SubResource("SphereMesh_3xc6o")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(-0.372418, 0.000961046, -0.928065, -0.00752563, 0.999963, 0.0040554, 0.928035, 0.00849458, -0.372397, 0, 0, -1.39921)
+material_override = SubResource("StandardMaterial3D_8u4y7")
+mesh = SubResource("SphereMesh_3xc6o")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00191307, 0, 1.32533)
+material_override = ExtResource("2_1g2uy")
+mesh = SubResource("SphereMesh_3xc6o")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0745189, -0.495721, -0.19102)
+mesh = SubResource("SphereMesh_8f7ve")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(4.40271, 0, 0, 0, 4.40271, 0, 0, 0, 4.40271, 0, -0.769683, 0)
+mesh = SubResource("PlaneMesh_i6cyx")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.984767, 0.0326885, -0.170779, 0.069781, 0.82531, 0.560352, 0.159263, -0.563733, 0.810457, 0, 0, 0)
+visible = false
+light_color = Color(1, 1, 0.658824, 1)
+shadow_enabled = true
+shadow_bias = 0.0
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.228389, 0.351315, -2.1305)
+visible = false
+light_color = Color(1, 0.407843, 1, 1)
+light_energy = 0.0
+omni_range = 4.61
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(0.620557, 0.784146, 0.00498396, -0.00108069, -0.00550057, 0.999984, 0.784161, -0.620552, -0.002566, 0, 2.1394, 0)
