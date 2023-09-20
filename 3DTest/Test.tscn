@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://3bvyt6w028r8"]
+
+[ext_resource type="Material" uid="uid://cphvnb00u3sf0" path="res://Poro_Shield/PoroMat.tres" id="1_psurr"]
+[ext_resource type="ArrayMesh" uid="uid://cim0ah72pjk7i" path="res://Poro_Shield/SM_PoroShield_Riot_01.obj" id="1_rug5n"]
+[ext_resource type="Script" path="res://HowTheTurntablesHaveTurned.gd" id="3_mpiso"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2yhex"]
+sky_top_color = Color(0.65098, 0.623529, 0.392157, 1)
+sky_horizon_color = Color(0.712745, 0.698132, 0.631289, 1)
+ground_horizon_color = Color(0.712745, 0.698132, 0.631289, 1)
+
+[sub_resource type="Sky" id="Sky_6pa51"]
+sky_material = SubResource("ProceduralSkyMaterial_2yhex")
+
+[sub_resource type="Environment" id="Environment_f8vvr"]
+background_mode = 1
+background_color = Color(0.0941176, 0.227451, 0.0705882, 1)
+sky = SubResource("Sky_6pa51")
+ambient_light_source = 2
+tonemap_mode = 2
+ssao_enabled = true
+glow_enabled = true
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0106
+volumetric_fog_albedo = Color(0.345098, 0.396078, 0.235294, 1)
+volumetric_fog_detail_spread = 0.5
+volumetric_fog_sky_affect = 0.575
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_f8vvr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+material_override = ExtResource("1_psurr")
+mesh = ExtResource("1_rug5n")
+script = ExtResource("3_mpiso")
+rotationSpeed = 50.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.957828, -0.16704, -0.233801, 0.193481, 0.976495, 0.0949836, 0.21244, -0.136214, 0.967634, 0, 83.2313, 143.396)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 44.7099, 107.157)

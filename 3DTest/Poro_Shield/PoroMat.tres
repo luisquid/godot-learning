@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cphvnb00u3sf0"]
+
+[ext_resource type="Texture2D" uid="uid://dktdclse22fr8" path="res://Poro_Shield/T_Riot_Poro_Shield_D.tga" id="1_7o1jk"]
+
+[resource]
+albedo_texture = ExtResource("1_7o1jk")
+metallic = 0.39
+metallic_specular = 0.02

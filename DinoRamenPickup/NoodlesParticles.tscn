@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cdv6b2hwh8b1f"]
 
 [node name="CPUParticles2D" type="CPUParticles2D"]
+scale = Vector2(5, 5)
 emitting = false
 amount = 200
 lifetime = 2.0
@@ -15,3 +16,4 @@ spread = 0.0
 gravity = Vector2(0, 100)
 angle_min = 467.8
 angle_max = 467.8
+scale_amount_max = 66.33
