@@ -1,8 +1,14 @@
-[gd_scene load_steps=10 format=3 uid="uid://dyxj5iguaxcle"]
+[gd_scene load_steps=16 format=3 uid="uid://dyxj5iguaxcle"]
+
+[ext_resource type="Script" path="res://Collision/PlayerMovement.gd" id="1_oi61a"]
+[ext_resource type="PackedScene" uid="uid://m0wfmny8qavy" path="res://Collision/Tree.tscn" id="2_4yyfn"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_67elw"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_n23ng"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mysgp"]
+friction = 0.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_fgt78"]
 
@@ -22,10 +28,20 @@ albedo_color = Color(1, 0.721569, 0.603922, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e1olx"]
 albedo_color = Color(1, 1, 0.54902, 1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_bjbxg"]
+size = Vector3(1.44154, 3.35369, 2.73007)
+
+[sub_resource type="Sky" id="Sky_teouf"]
+
+[sub_resource type="Environment" id="Environment_xkey2"]
+background_mode = 1
+background_color = Color(0.333333, 0.780392, 1, 1)
+sky = SubResource("Sky_teouf")
+
 [node name="Main" type="Node3D"]
 
 [node name="Ground" type="StaticBody3D" parent="."]
-transform = Transform3D(4.71855, 0, 0, 0, 0.25438, 9.74451, 0, -0.0993421, 24.9522, 0, 0, 0)
+transform = Transform3D(20.6791, 0, 0, 0, 1.14138, -35.3175, 0, 0.360051, 111.958, 0, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
 mesh = SubResource("BoxMesh_67elw")
@@ -33,47 +49,76 @@ mesh = SubResource("BoxMesh_67elw")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
 shape = SubResource("BoxShape3D_n23ng")
 
-[node name="RigidBody3D" type="RigidBody3D" parent="."]
-transform = Transform3D(4.71855, 0, 0, 0, 0.25438, 9.74451, 0, -0.0993421, 24.9522, 0, 0, 0)
+[node name="Player" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.693439, 16.906, -44.9461)
+physics_material_override = SubResource("PhysicsMaterial_mysgp")
+max_contacts_reported = 5
+contact_monitor = true
+script = ExtResource("1_oi61a")
+moveSpeed = 10.0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
-transform = Transform3D(0.211929, 0, 0, 0, 8.41743, -0.857727, 0, 0.0335123, 0.0223909, 0, 10.6843, 0.0425374)
+[node name="Body" type="MeshInstance3D" parent="Player"]
+transform = Transform3D(0.999998, 0, 0, 0, 2.4676, 0.00786693, 0, -0.03015, 0.643863, 0, 3.13214, -0.0382696)
 mesh = SubResource("BoxMesh_fgt78")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_3ueyt")
 
-[node name="MeshInstance3D5" type="MeshInstance3D" parent="RigidBody3D"]
-transform = Transform3D(0.123663, 0, 0, 0, -3.39732, -0.372452, 0, 0.0886868, -0.00148284, -0.0928457, 6.41923, 0.0247471)
+[node name="Skii" type="MeshInstance3D" parent="Player"]
+transform = Transform3D(0.58351, 0, 0, 0, 0.0311581, -0.109186, 0, 2.55024, 0.001334, -0.438097, 1.87369, -0.0431005)
 mesh = SubResource("BoxMesh_fgt78")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_a6iwb")
 
-[node name="MeshInstance3D6" type="MeshInstance3D" parent="RigidBody3D"]
-transform = Transform3D(0.123663, 0, 0, 0, -3.39732, -0.372452, 0, 0.0886868, -0.00148284, 0.0896334, 6.41923, 0.0247471)
+[node name="Skii2" type="MeshInstance3D" parent="Player"]
+transform = Transform3D(0.58351, 0, 0, 0, 0.0311581, -0.109186, 0, 2.55024, 0.001334, 0.42294, 1.87369, -0.0431005)
 mesh = SubResource("BoxMesh_fgt78")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_a6iwb")
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="RigidBody3D"]
-transform = Transform3D(-0.0347914, 0.206422, 0, -0.652227, -2.85228, -0.341756, -0.00259671, -0.0113558, 0.00892151, 0.146798, 11.6507, 0.0463848)
+[node name="LeftArm" type="MeshInstance3D" parent="Player"]
+transform = Transform3D(-0.164165, 0.974014, 7.8507e-08, -0.191203, -0.836155, 0.00313448, 0.0023362, 0.010216, 0.256543, 0.692674, 3.41545, -0.0417343)
 mesh = SubResource("BoxMesh_fgt78")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_e7ysc")
 
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="RigidBody3D"]
-transform = Transform3D(0.0347581, -0.206568, -4.75344e-09, -0.652686, -2.84956, 0.341756, -0.00259854, -0.0113449, -0.00892151, -0.173772, 11.6507, 0.0463848)
+[node name="RightArm" type="MeshInstance3D" parent="Player"]
+transform = Transform3D(0.164008, -0.974703, -2.07021e-07, -0.191337, -0.835357, -0.00313465, 0.00233778, 0.0102079, -0.256543, -0.819952, 3.41545, -0.0417343)
 mesh = SubResource("BoxMesh_fgt78")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_e7ysc")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="RigidBody3D"]
-transform = Transform3D(0.338888, 0, 0, 0, 5.45428, -2.13004, 0, 0.0217151, 0.0556046, 0, 15.7901, 0.0628651)
+[node name="Head" type="MeshInstance3D" parent="Player"]
+transform = Transform3D(1.59906, 0, 0, 0, 1.59894, 0.0195368, 0, -0.0195367, 1.59894, 0, 4.62893, -0.0565581)
 mesh = SubResource("SphereMesh_flcu0")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_e7ysc")
 
-[node name="MeshInstance3D7" type="MeshInstance3D" parent="RigidBody3D"]
-transform = Transform3D(0.309584, 0, 0, 0, 3.99172, -1.93953, 0, 0.0158922, 0.0506312, 0, 19.1922, 0.0764097)
+[node name="Hat" type="MeshInstance3D" parent="Player"]
+transform = Transform3D(1.46079, 0, 0, 0, 1.17019, 0.01779, 0, -0.0142985, 1.45593, 0, 5.62627, -0.0687484)
 mesh = SubResource("PrismMesh_0m3is")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_e1olx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.54852, -0.0410748)
+shape = SubResource("BoxShape3D_bjbxg")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(-1, 4.46029e-08, -7.51886e-08, 0, 0.860057, 0.510198, 8.74228e-08, 0.510198, -0.860057, 0, 11.7304, -8.76216)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.102428, 0.99474, 0, -0.99474, 0.102428, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_xkey2")
+
+[node name="Tree" parent="." instance=ExtResource("2_4yyfn")]
+
+[node name="Tree2" parent="." instance=ExtResource("2_4yyfn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.96917, 1.84295, 0)
+
+[node name="Tree3" parent="." instance=ExtResource("2_4yyfn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.91136, 0.767785, 1.66336)
+
+[connection signal="body_entered" from="Player" to="Player" method="_on_body_entered"]
