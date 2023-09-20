@@ -115,10 +115,37 @@ environment = SubResource("Environment_xkey2")
 
 [node name="Tree" parent="." instance=ExtResource("2_4yyfn")]
 
+[node name="Tree4" parent="." instance=ExtResource("2_4yyfn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.87146, -16.6562)
+
+[node name="Tree5" parent="." instance=ExtResource("2_4yyfn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.81225, 5.25452, -12.815)
+
+[node name="Tree6" parent="." instance=ExtResource("2_4yyfn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.69037, 6.12387, -14.7922)
+
 [node name="Tree2" parent="." instance=ExtResource("2_4yyfn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.96917, 1.84295, 0)
 
 [node name="Tree3" parent="." instance=ExtResource("2_4yyfn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.91136, 0.767785, 1.66336)
+
+[node name="Tree8" parent="." instance=ExtResource("2_4yyfn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.05747, -3.09527, 15.5076)
+
+[node name="Tree11" parent="." instance=ExtResource("2_4yyfn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8894, -3.09527, 15.5076)
+
+[node name="Tree12" parent="." instance=ExtResource("2_4yyfn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8894, -2.43167, 12.1318)
+
+[node name="Tree9" parent="." instance=ExtResource("2_4yyfn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.96917, -4.54768, 21.0411)
+
+[node name="Tree10" parent="." instance=ExtResource("2_4yyfn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.91136, -5.62284, 22.7044)
+
+[node name="Tree7" parent="." instance=ExtResource("2_4yyfn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.91136, 4.2326, -8.67068)
 
 [connection signal="body_entered" from="Player" to="Player" method="_on_body_entered"]
