@@ -1,11 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://c55scf5vfnqpq"]
+[gd_scene load_steps=9 format=3 uid="uid://c55scf5vfnqpq"]
 
 [ext_resource type="Texture2D" uid="uid://biwond464pw3f" path="res://Sprites/Tiles/tiles_packed.png" id="1_2wo0k"]
-[ext_resource type="Script" path="res://Player.gd" id="2_7f68j"]
-[ext_resource type="Texture2D" uid="uid://cjfbasl7eygp0" path="res://Sprites/Characters/character_0002.png" id="2_e57wo"]
+[ext_resource type="PackedScene" uid="uid://big5u0h0vja8j" path="res://Player.tscn" id="2_bb7hu"]
 [ext_resource type="PackedScene" uid="uid://qpup05kcsvfw" path="res://Enemy.tscn" id="4_7iffs"]
 [ext_resource type="PackedScene" uid="uid://ce2mtvt2g5n7s" path="res://Spikes.tscn" id="5_s5tn5"]
 [ext_resource type="PackedScene" uid="uid://dyhiifpinjko7" path="res://Coin.tscn" id="6_j08wu"]
+[ext_resource type="PackedScene" uid="uid://dvir6m7r2ngxh" path="res://EndFlag.tscn" id="6_yvapm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hjwgf"]
 texture = ExtResource("1_2wo0k")
@@ -442,12 +442,15 @@ texture_region_size = Vector2i(18, 18)
 12:6/0 = 0
 12:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 12:6/0/physics_layer_0/angular_velocity = 0.0
+12:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 13:6/0 = 0
 13:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 13:6/0/physics_layer_0/angular_velocity = 0.0
+13:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 14:6/0 = 0
 14:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 14:6/0/physics_layer_0/angular_velocity = 0.0
+14:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 15:6/0 = 0
 15:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 15:6/0/physics_layer_0/angular_velocity = 0.0
@@ -592,12 +595,6 @@ texture_region_size = Vector2i(18, 18)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_hjwgf")
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_771ht"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_xv7qs"]
-font_size = 30
-outline_color = Color(0.0823529, 0, 0, 1)
-
 [node name="Main" type="Node2D"]
 position = Vector2(257, -155)
 
@@ -606,30 +603,9 @@ position = Vector2(-34, -21)
 tile_set = SubResource("TileSet_oyg2m")
 cell_quadrant_size = 18
 format = 2
-layer_0/tile_data = PackedInt32Array(196604, 65536, 0, 196605, 65536, 0, 196606, 65536, 0, 196607, 65536, 0, 131072, 65536, 0, 131073, 65536, 0, 131074, 65536, 0, 131075, 131072, 6, 262140, 65536, 6, 262141, 65536, 6, 262142, 65536, 6, 262143, 65536, 6, 196608, 65536, 6, 196609, 65536, 6, 196610, 65536, 6, 196611, 65536, 6, 131076, 196608, 6, 196612, 196608, 6, 262148, 196608, 6, 262147, 131072, 6, 262146, 131072, 6, 262145, 131072, 6, 262144, 131072, 6, 327679, 131072, 6, 327678, 131072, 6, 327677, 131072, 6, 393213, 131072, 6, 393212, 65536, 6, 327676, 65536, 6, 393214, 131072, 6, 393215, 131072, 6, 327680, 131072, 6, 327681, 131072, 6, 327682, 131072, 6, 327683, 131072, 6, 327684, 196608, 6, 131080, 131072, 0, 131079, 65536, 0, 131081, 131072, 0, 131082, 131072, 0, 131083, 196608, 0, 196616, 262144, 0, 196617, 262144, 0, 196618, 262144, 0, 262154, 262144, 0, 262153, 262144, 0, 262152, 262144, 0, 196615, 65536, 6, 262151, 65536, 6, 196619, 196608, 6, 262155, 196608, 6, 327688, 131072, 7, 327689, 131072, 7, 327690, 131072, 7, 327691, 196608, 7, 327687, 65536, 7, 131087, 786432, 6, 131088, 851968, 6, 131089, 851968, 6, 131090, 917504, 6, 65539, 65536, 6, 65540, 196608, 6, 3, 65536, 0, 4, 196608, 0)
+layer_0/tile_data = PackedInt32Array(196604, 65536, 0, 196605, 65536, 0, 196606, 65536, 0, 196607, 65536, 0, 131072, 65536, 0, 131073, 65536, 0, 131074, 65536, 0, 131075, 131072, 6, 262140, 65536, 6, 262141, 65536, 6, 262142, 65536, 6, 262143, 65536, 6, 196608, 65536, 6, 196609, 65536, 6, 196610, 65536, 6, 196611, 65536, 6, 131076, 196608, 6, 196612, 196608, 6, 262148, 196608, 6, 262147, 131072, 6, 262146, 131072, 6, 262145, 131072, 6, 262144, 131072, 6, 327679, 131072, 6, 327678, 131072, 6, 327677, 131072, 6, 393213, 131072, 6, 393212, 65536, 6, 327676, 65536, 6, 393214, 131072, 6, 393215, 131072, 6, 327680, 131072, 6, 327681, 131072, 6, 327682, 131072, 6, 327683, 131072, 6, 327684, 196608, 6, 131080, 131072, 0, 131079, 65536, 0, 131081, 131072, 0, 131082, 131072, 0, 131083, 196608, 0, 196616, 262144, 0, 196617, 262144, 0, 196618, 262144, 0, 262154, 262144, 0, 262153, 262144, 0, 262152, 262144, 0, 196615, 65536, 6, 262151, 65536, 6, 196619, 196608, 6, 262155, 196608, 6, 327688, 131072, 7, 327689, 131072, 7, 327690, 131072, 7, 327691, 196608, 7, 327687, 65536, 7, 131087, 786432, 6, 131088, 851968, 6, 131089, 851968, 6, 131090, 917504, 6, 65539, 65536, 6, 65540, 196608, 6, 3, 65536, 0, 4, 196608, 0, 196603, 851968, 6, 196602, 851968, 6)
 
-[node name="Player" type="CharacterBody2D" parent="." groups=["Player"]]
-position = Vector2(-78, -5)
-script = ExtResource("2_7f68j")
-
-[node name="Sprite" type="Sprite2D" parent="Player"]
-texture = ExtResource("2_e57wo")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-shape = SubResource("CapsuleShape2D_771ht")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="Player"]
-
-[node name="ScoreText" type="Label" parent="Player/CanvasLayer"]
-offset_left = 46.0
-offset_top = 43.0
-offset_right = 107.0
-offset_bottom = 69.0
-text = "Score: 0"
-label_settings = SubResource("LabelSettings_xv7qs")
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
-zoom = Vector2(3, 3)
+[node name="Player" parent="." instance=ExtResource("2_bb7hu")]
 
 [node name="Enemy" parent="." instance=ExtResource("4_7iffs")]
 position = Vector2(-4, -33)
@@ -638,8 +614,12 @@ position = Vector2(-4, -33)
 position = Vector2(63, -35)
 
 [node name="Enemy3" parent="." instance=ExtResource("4_7iffs")]
-position = Vector2(184, 6)
+position = Vector2(181, 45)
+moveDir = Vector2(200, 0)
 
 [node name="Spikes" parent="." instance=ExtResource("5_s5tn5")]
+position = Vector2(123, 2)
 
 [node name="Coin" parent="." instance=ExtResource("6_j08wu")]
+
+[node name="EndFlag" parent="." instance=ExtResource("6_yvapm")]
