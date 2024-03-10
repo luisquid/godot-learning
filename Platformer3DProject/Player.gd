@@ -6,9 +6,15 @@ var gravity : float = 20.0
 
 var facing_angle : float
 
+var score : int
+
 @onready var model : MeshInstance3D = get_node("Model")
+@onready var score_text : Label = get_node("ScoreText")
 
 func _physics_process(delta):
+	
+	if Input.is_key_pressed(KEY_ESCAPE):
+		get_tree().quit()
 	
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -34,3 +40,7 @@ func _physics_process(delta):
 	
 func game_over ():
 	get_tree().reload_current_scene()
+	
+func add_score(amount):
+	score+= amount
+	score_text.text = str("Score: ", score)

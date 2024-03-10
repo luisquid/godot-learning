@@ -1,0 +1,6 @@
+Label
+DirectionalLight3D
+Camera3D
+CollisionShape3D
+MeshInstance3D
+Area3D
