@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://4wvb1xocyjdl"]
+
+[ext_resource type="Texture2D" uid="uid://bktdyntnd10bd" path="res://Sprites/Dragon.png" id="1_n8jn5"]
+[ext_resource type="Script" path="res://Character.gd" id="1_ucgvi"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iux64"]
+bg_color = Color(0.12549, 0.0745098, 0.0627451, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bepyx"]
+bg_color = Color(1, 0.0509804, 0.243137, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_vpkcf"]
+font_size = 22
+outline_size = 5
+outline_color = Color(0.113725, 0.129412, 0.0745098, 1)
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(1.735, 1)
+
+[node name="Character" type="Node2D"]
+script = ExtResource("1_ucgvi")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_n8jn5")
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -130.0
+offset_top = 89.0
+offset_right = 130.0
+offset_bottom = 116.0
+theme_override_styles/background = SubResource("StyleBoxFlat_iux64")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bepyx")
+value = 100.0
+show_percentage = false
+
+[node name="HealthText" type="Label" parent="HealthBar"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = -2.0
+offset_right = 260.0
+offset_bottom = 29.0
+text = "25 / 25"
+label_settings = SubResource("LabelSettings_vpkcf")
+horizontal_alignment = 1
+vertical_alignment = 1
